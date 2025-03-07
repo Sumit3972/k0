@@ -5,6 +5,7 @@ import Header from '@/components/custom/Header'
 import Hero from '@/components/custom/Hero'
 import { Messagecontext } from '@/context/messagecontext'
 import { Userdetailcontext } from '@/context/Userdetail'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 function Provider({children}) {
    
@@ -13,6 +14,7 @@ function Provider({children}) {
 
   return (
   <div>
+    <GoogleOAuthProvider clientId='33710335814-i171voeu12k0cpdfi9fct51fjos5tjkk.apps.googleusercontent.com'>
     <Userdetailcontext.Provider value={{userdetail,setuserdetail}}>
     <Messagecontext.Provider value={{message,setmessage}}>
     <NextThemesProvider
@@ -25,6 +27,7 @@ function Provider({children}) {
     </NextThemesProvider>
     </Messagecontext.Provider>
     </Userdetailcontext.Provider>
+    </GoogleOAuthProvider>;
 
   </div>
  
