@@ -7,14 +7,21 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import lookup from "@/data/lookup";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Button } from "../ui/button";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { Userdetailcontext } from "@/context/Userdetail";
 
+import { api } from "@/convex/_generated/api";
+import uuid4 from "uuid4";
+import { useMutation } from "convex/react";
+
 function Signdialog({ opendialog, closedialog }) {
   const { userdetail, setuserdetail } = useContext(Userdetailcontext);
+  const CreateUser = useMutation(api.users.CreateUser);
+
+ 
 
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -25,6 +32,18 @@ function Signdialog({ opendialog, closedialog }) {
       );
 
       console.log(userInfo);
+      const user = userInfo.data;
+      await CreateUser({
+        name: user?.name,
+        email: user?.email,
+        picture: user?.picture,
+        uid: uuid4(),
+      });
+
+      if (typeof window !== undefined) {
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+
       setuserdetail(userInfo?.data);
       closedialog(false);
     },
