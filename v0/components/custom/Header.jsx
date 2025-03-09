@@ -25,7 +25,7 @@ function Header() {
   return (
     <div className="p-4 flex justify-between items-center">
       <Link href={'/'}>
-        <Image src={'/logo.png'} alt="logo" width={40} height={40} />
+        <Image src={'/logo1.webp'} alt="logo" width={90} height={90} />
       </Link>
       {!userDetail?.name ? (
         <div className="flex gap-5">
